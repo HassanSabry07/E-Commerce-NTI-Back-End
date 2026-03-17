@@ -37,6 +37,8 @@ app.use('/api/overviews',      require('./src/routes/overview.route'));
 app.use('/api/wishlist',       require('./src/routes/wishlist.route'));
 app.use('/api/hero-settings',  require('./src/routes/heroSettings.route'));
 app.use('/api/notifications',  require('./src/routes/notification.route'));
+app.use('/api/site-settings',  require('./src/routes/siteSettings.route'));
+
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
 app.use((req, res) => {
   res.status(404).json({ message: `Route ${req.originalUrl} not found` });

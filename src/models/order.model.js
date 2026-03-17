@@ -2,12 +2,8 @@ const mongoose = require("mongoose");
 
 const orderItemSchema = new mongoose.Schema(
   {
-    product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
-    },
-    quantity: { type: Number, required: true, min: 1 },
+    product:         { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+    quantity:        { type: Number, required: true, min: 1 },
     priceAtOrdering: { type: Number, required: true },
   },
   { _id: false },
@@ -16,12 +12,12 @@ const orderItemSchema = new mongoose.Schema(
 const orderSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    products: [orderItemSchema],
+    products:   [orderItemSchema],
     totalPrice: { type: Number, required: true },
     shippingAddress: {
       type: {
-        street: { type: String, required: true, trim: true },
-        city: { type: String, required: true, trim: true },
+        street:      { type: String, required: true, trim: true },
+        city:        { type: String, required: true, trim: true },
         governorate: { type: String, required: true, trim: true },
       },
       required: true,
@@ -38,7 +34,8 @@ const orderSchema = new mongoose.Schema(
         "preparing",
         "shipped",
         "delivered",
-        "cancelled",
+        "cancelled_by_user",  
+        "cancelled_by_admin",  
         "rejected",
       ],
       default: "pending",
@@ -49,17 +46,9 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-orderSchema.pre("find", function () {
-  this.where({ isDeleted: false });
-});
-orderSchema.pre("findOne", function () {
-  this.where({ isDeleted: false });
-});
-orderSchema.pre("countDocuments", function () {
-  this.where({ isDeleted: false });
-});
-orderSchema.pre("findOneAndUpdate", function () {
-  this.where({ isDeleted: false });
-});
+orderSchema.pre("find",            function () { this.where({ isDeleted: false }); });
+orderSchema.pre("findOne",         function () { this.where({ isDeleted: false }); });
+orderSchema.pre("countDocuments",  function () { this.where({ isDeleted: false }); });
+orderSchema.pre("findOneAndUpdate",function () { this.where({ isDeleted: false }); });
 
 module.exports = mongoose.model("Order", orderSchema);

@@ -69,7 +69,7 @@ exports.addUser = (role) => async (req, res) => {
     }
 
     const { name, email, password, phones, addresses } = req.body;
-    console.log('📥 addUser body:', { name, email, role }); // ✅ مؤقت للـ debug
+    console.log('📥 addUser body:', { name, email, role }); 
 
     const existingUser = await User.findOne({ email });
 
@@ -93,7 +93,7 @@ exports.addUser = (role) => async (req, res) => {
     res.status(201).json({ message: `${role} created successfully`, data: { token } });
   } catch (err) {
     console.error(`Error In addUser(): ${err.message}`);
-    console.error(err); // ✅ مؤقت للـ debug
+    console.error(err); 
     res.status(500).json({ message: `${role} creation failed` });
   }
 };
